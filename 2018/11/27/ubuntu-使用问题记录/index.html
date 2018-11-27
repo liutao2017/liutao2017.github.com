@@ -5,16 +5,16 @@
   
   <title>ubuntu 使用问题记录 | Maxtao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="如何讓file system 變成可以write, 而不是read only，這篇的解法就還蠻簡單的，就是只要下指令就可以了。 mount -o remount,rw /">
+  <meta name="description" content="如何讓file system 變成可以write, 而不是read only，這篇的解法就還蠻簡單的，就是只要下指令就可以了。 mount -o remount,rw / ######################################################## #!/binsh Install the prerequisites for the ROS Projectsud">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ubuntu 使用问题记录">
 <meta property="og:url" content="http://liutao2017.github.io/2018/11/27/ubuntu-使用问题记录/index.html">
 <meta property="og:site_name" content="Maxtao">
-<meta property="og:description" content="如何讓file system 變成可以write, 而不是read only，這篇的解法就還蠻簡單的，就是只要下指令就可以了。 mount -o remount,rw /">
-<meta property="og:updated_time" content="2018-11-27T13:39:55.323Z">
+<meta property="og:description" content="如何讓file system 變成可以write, 而不是read only，這篇的解法就還蠻簡單的，就是只要下指令就可以了。 mount -o remount,rw / ######################################################## #!/binsh Install the prerequisites for the ROS Projectsud">
+<meta property="og:updated_time" content="2018-11-27T14:03:21.773Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu 使用问题记录">
-<meta name="twitter:description" content="如何讓file system 變成可以write, 而不是read only，這篇的解法就還蠻簡單的，就是只要下指令就可以了。 mount -o remount,rw /">
+<meta name="twitter:description" content="如何讓file system 變成可以write, 而不是read only，這篇的解法就還蠻簡單的，就是只要下指令就可以了。 mount -o remount,rw / ######################################################## #!/binsh Install the prerequisites for the ROS Projectsud">
   
     <link rel="alternate" href="/atom.xml" title="Maxtao" type="application/atom+xml">
   
@@ -91,11 +91,225 @@
       
         <p>如何讓file system 變成可以write, 而不是read only，這篇的解法就還蠻簡單的，就是只要下指令就可以了。</p>
 <p>mount -o remount,rw /</p>
+<p>########################################################</p>
+<p>#!/binsh</p>
+<h1 id="Install-the-prerequisites-for-the-ROS-Project"><a href="#Install-the-prerequisites-for-the-ROS-Project" class="headerlink" title="Install the prerequisites for the ROS Project"></a>Install the prerequisites for the ROS Project</h1><p>sudo apt-get install ros-indigo-urdf ros-indigo-urdf-parser-plugin ros-indigo-urdf-tutorial ros-indigo-urdfdom-py ros-indigo-navigation ros-indigo-navigation-layers ros-indigo-depthimage-to-laserscan ros-indigo-openni<em> ros-indigo-kobuki</em> ros-indigo-turtlebot-bringup ros-indigo-turtlebot-create</p>
+<p>########################################################<br>HOST connect to jetson tx1<br>10.42.0.96</p>
+<p>ssh ubuntu@tegra-ubuntu.local</p>
+<p>########################################################<br>三、测试MNIST<br>我们使用caffe自带的mnist例子来测试caffe是否编译成功。</p>
+<pre><code>$ bash ./date/mnist/get_mnist.sh  
+$ bash ./examples/mnist/create_mnist.sh  
+$ bash ./examples/mnist/train_lenet.sh   
+</code></pre><p>如果caffe编译成功，则上面的程序不会报错。 </p>
+<p>########################################################<br>注意：卸载老的内核之前，首先用uname -a查看当前启动的是哪个内核（防止把当前正在使用的内核卸载了）：<br>zht@zht-Ubuntu:~$ uname -a<br>Linux zht-Ubuntu 3.5.0-26-generic #42-Ubuntu SMP Fri Mar 8 23:18:20 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux</p>
+<p>卸载旧的内核，命令如下：<br>//卸载linux-image-3.5.0-17-generic<br>zht@zht-Ubuntu:~$ sudo apt-get purge Linux-image-3.5.0-17-generic</p>
+<p>##############################################################################<br>Ubuntu下搜狗拼音输入法打不出汉字的解决方法<br>问题<br>（1）Ubuntu下，搜狗拼音输入法能启动（系统托盘处有图标），但是打不出汉字，打字时选框不正常。<br>或者<br>（2）Deepin下，搜狗输入法无法启动，托盘处不显示图标，fcitx运行正常（这个可以通过命令行启动fcitx来验证）。</p>
+<p>解决方法<br>删除搜狗拼音输入法的配置文件，并重启输入法。<br>执行如下指令</p>
+<p>cd ~/.config<br>find . -name sogou<em><br>find . -name Sogou</em><br>将两次搜索到的配置文件删除即可。<br>如果是单独文件，使用rm [文件名]指令，如果是目录，使用rm -R [目录名]指令。</p>
+<p>################################################################################<br>获取笔记本摄像头<br>gst-launch-1.0 v4l2src ! autovideosink<br>gst-launch-1.0 v4l2src ! xvimagesink<br>gst-launch-1.0 v4l2src device=”/dev/video0” ! “video/x-raw, width=640,height=480, format=(string)I420” ! xvimagesink -e</p>
+<p>gst-launch-1.0 videotestsrc ! ‘video/x-raw, format=(string)I420,<br>width=(int)640, height=(int)480’ ! omxh264enc ! ‘video/x-h264, stream-<br>format=(string)byte-stream’ ! h264parse ! qtmux ! filesink location=test.mp4 -e</p>
+<p>获取TX1 MIPI摄像头<br>gst-launch-1.0 nvcamerasrc ! nvoverlaysink -e</p>
+<p>#######################################################################################<br>仅使用df  -T 即可。这样可以列出文件系统格式</p>
+<p>#######################################################################################<br>更改GRUB相关<br>sudo gedit /etc/default/grub<br>sudo update-grub</p>
+<p>GRUB2的默认启动顺序修改<br>首先我们cd到ubuntu的/boot/grub目录下，该目录下有个文件grub.cfg，就是设置默认启动的文件。</p>
+<p>#######################################################################################<br>双屏显示(eDP-1:笔记本屏幕;DP-1:外接显示器)</p>
+<p>关闭双屏显示:xrandr –output DP-1 –off<br>        xrandr –output DP-1 –auto –output eDP-1 –off<br>双屏复制显示:xrandr –output DP-1 –same-as eDP-1 –auto<br>双屏右侧扩展显示:xrandr –output DP-1 –right-of eDP-1 –auto<br>        xrandr –output DP-1 –right-of eDP-1 –mode 1920x1080</p>
+<p>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%<br>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%<br>ubuntu wps缺失字体<br>4，因我的是windows 7与Ubuntu 14.04共存的安装模式，直接在windows C:\windows\Fonts目录下找到相应的字体，复制到Ubuntu /主文件夹/.fonts目录下。然后重启WPS即可。<br>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%<br>然后去你的源码目录, 如果你的源码是多层的目录, 就去最上层的目录, 在该目录下运行命令: ctags -R<br>我现在以 vim71 的源码目录做演示<br>$ cd /home/wooin/vim71<br>$ ctags -R 此时在/home/wooin/vim71目录下会生成一个 tags 文件, 现在用vim打开 /home/wooin/vim71/src/main.c<br>$ vim /home/wooin/vim71/src/main.c 再在vim中运行命令:<br>:set tags=/home/wooin/vim71/tags</p>
+<p>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%<br>为知笔记官方提供的安装方法是下载源码到本地编译<br>编译为知笔记客户端<br>这个方法稍显复杂，失败了好几次，后来发现了更简单的方法——添加ppa安装 </p>
+<p>sudo add-apt-repository ppa:wiznote-team<br>sudo apt-get update<br>sudo apt-get install wiznote </p>
+<p>很快就搞定<br>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</p>
+<p>因为启动了gnome-keyring（密钥环），可以用seahorse把密码置空。<br>终端里面输入<br>seahorse<br>对着出来的第一条记录（一般叫login神马的），「点右键」-&gt;更改密码</p>
+<p>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%<br>（四） Ubuntu 清除无用垃圾<br>1 ，非常有用的清理命令：<br>sudo apt-get autoclean 清理旧版本的软件缓存<br>sudo apt-get clean 清理所有软件缓存<br>sudo apt-get autoremove 删除系统不再使用的孤立软件<br>2 ，清理opera firefox 的缓存文件：<br>ls ~/.opera/cache4<br>ls ~/.mozilla/firefox/*.default/Cache<br>　　3 ，清理Linux 下孤立的包：<br>　　图形界面下我们可以用：gtkorphan<br>　　sudo apt-get install gtkorphan -y<br>　　终端命令下我们可以用：deborphan<br>　　sudo apt-get install deborphan -y<br>　　4 ，卸载：tracker<br>　　这个东西一般我只要安装Ubuntu 就会第一删掉tracker 他不仅会产生大量的cache 文件而且还会影响开机速度。所以在新得利里面删掉就行。<br>　　5 ，删除多余的内核：一定不要删错哦，切记！！<br>　　打开终端敲命令：dpkg –get-selections|grep linux<br>　　有image 的就是内核文件<br>　　删除老的内核文件：<br>　　sudo apt-get remove 内核文件名 （例如：linux-image-2.6.27-2-generic ）<br>　　内核删除，释放空间了，应该能释放130 －140M 空间。<br>　　最后不要忘了看看当前内核：uname -a<br>　　附录：<br>　　包管理的临时文件目录:<br>　　包在<br>　　/var/cache/apt/archives<br>　　没有下载完的在<br>　　/var/cache/apt/archives/partial<br>　　使用Ubuntu 一段时间后，就会发觉由于自动升级，系统里安装了很多内核。像我，竟然安装了下面那么多，这个造成了漫长的启动列表。必须删掉一些不用的。<br>　　首先就是使用如下命令，列出所有安装的内核，下表中，带有image 的就是内核文件。从中选择要卸载的包，用apt-get 来卸载<br>　　[tc@ibm:~]$ dpkg –get-selections|grep linux<br>　　libselinux1 install<br>　　linux-386 install<br>　　linux-image-2.6.15-23-386 install<br>　　linux-image-2.6.15-27-386 install<br>　　linux-image-2.6.15-27-686 install<br>　　linux-image-2.6.15-28-386 instal<br>linux-image-2.6.15-28-686 deinstall<br>　　linux-image-386 install<br>　　linux-kernel-headers install<br>　　linux-restricted-modules-2.6.15-23-386 install<br>　　linux-restricted-modules-2.6.15-27-386 install<br>　　linux-restricted-modules-2.6.15-27-686 install<br>　　linux-restricted-modules-2.6.15-28-386 install<br>　　linux-restricted-modules-2.6.15-28-686 deinstall<br>　　linux-restricted-modules-386 install<br>　　linux-restricted-modules-common install<br>　　linux-sound-base install<br>　　util-linux install<br>　　具体的卸载方法为<br>　　sudo apt-get remove linux-image-2.6.15-23-386<br>　　这样就可以实现自动删除内核文件了，还可以释放磁盘空间。<br>　　另外还要记录一个命令。<br>　　uname -a<br>　　使用这个命令可以查看当前系统使用的内核</p>
+<p>######################################################################<br>安装ffmpeg,将视频转图片<br>sudo add-apt-repository ppa:kirillshkrogalev/ffmpeg-next<br>sudo apt-get update<br>sudo apt-get install ffmpeg<br>主要参数： -i 设定输入流; -f 设定输出格式; -ss 开始时间<br>视频参数： -b 设定视频流量，默认为200Kbit/s; -r 设定帧速率，默认为25 -s 设定画面的宽与高 -aspect 设定画面的比例 -vn 不处理视频 -vcodec 设定视频编解码器，未设定时则使用与输入流相同的编解码器<br>音频参数： -ar 设定采样率 -ac 设定声音的Channel数 -acodec 设定声音编解码器，未设定时则使用与输入流相同的编解码器 -an 不处理音频<br>ffmpeg –i test.avi –r 1 –f image2 image-%3d.jpeg        //提取图片<br>ffmpeg -i capx.mp4 -t 10 -s 320x240 -pix_fmt rgb24 jidu1.gif<br>ffmpeg -y -i beijing5-360p.mp4 -ss 165.000 -frames 1 -f image2 cap%3d.jpg    //截屏<br>ffmpeg -ss 00:00:00 -t 00:00:30 -i test.mp4 -vcodec copy -acodec copy output.mp4<br>ffmpeg -ss 00:00:00 -i input.mp4 -c copy -t 60 output.mp4</p>
+<ul>
+<li>-ss 指定从什么时间开始</li>
+<li>-t 指定需要截取多长时间</li>
+<li>-i 指定输入文件<br>录制文件<br>ffmpeg -f video4linux2 -s 1920*1080 -r 25 -i /dev/video1 -vcodec libx264 -pix_fmt yuv420p -an -f mp4 output.mp4</li>
+</ul>
+<p>推流</p>
+<p>#############安装wine,用来安装timeline############333<br>sudo add-apt-repository ppa:ubuntu-wine/ppa<br>sudo apt-get update<br>sudo apt-get install wine1.7</p>
+<p>sudo dpkg –add-architecture i386<br>sudo apt-get update<br>sudo apt-get install wine</p>
+<p>############查询某个软件包是否安装</p>
+<p>dpkg -s software_name</p>
+<p>dpkg-query -l software_name</p>
+<p>要列出你系统中安装的所有包，输入下面的命令：<br>dpkg –get-selections</p>
+<p>此外，你可以使用“-L”参数来找出包中文件的位置。<br>dpkg -L software_name</p>
+<p>$dpkg -l | grep software_name</p>
+<p>先用 apt-cache search找到软件的准确名字，再用apt-cache show来看详细的信息</p>
+<p>###########重命名文件名<br>rename -v ‘s/原字符串/新字符串/‘ *.mp3</p>
+<p>###########更改桌面背景<br>sudo bash setbackground.sh -d 3 -s 300 -f yourfilepath</p>
+<p>##########swig 操作步骤<br>swig    -c++    -python    example.i<br>python    setup.py    build_ext    –inplace</p>
+<p>#####################################<br>查看.a文件都包含了那些文件<br>    ar -t  xxx.a</p>
+<p>查看.so文件接口<br>    nm -DC xxx.so<br>    objdump -tT xxx.so</p>
+<p>readelf可以啊。ldd可以看调用库啊。<br>ldd看的是连接的库</p>
+<p>#####################################<br>如何查看deb包文件;查看软件库中的软件包有哪些文件</p>
+<p>需使用apt-file软件</p>
+<p>apt-get install apt-file       //首先安装<br>apt-file update               //更新列表<br>apt-file list packageName    //查看包文件</p>
+<p>查看deb包文件内容</p>
+<p>dpkg-deb -c packageName</p>
+<p>查看已安装包内容<br>dpkg -L packageName</p>
+<p>数字怎么不以科学计数法显示？<br>format long g</p>
+<p>###################################################################################3<br>每次启动Ubuntu都显示System program problem detected，很烦人，不过修改一个文件就可以。<br>执行命令：<br>sudo gedit /etc/default/apport<br>将enabled=1改为enabled=0保存退出即可<br>有两种方案可以解决：</p>
+<p>   （1）暂时解决的办法，该命令是暂时删除系统中所有的旧的临时文件，在终端输入：</p>
+<p> sudo rm -rf /var/crash<br>  （2）永久删除：<br> sudo sed -i ‘s/enabled=1/enabled=0/g’ /etc/default/apport<br>该命令直接将apport禁止，所以你不会再收到信息。</p>
+<p>########################################################<br>ubuntu 设置系统时间与网络时间同步<br>sudo apt-get install ntpdate<br>sudo ntpdate cn.pool.ntp.org<br>sudo hwclock –systohc</p>
+<p>相关命令<br>date -set “10/11/10 10:15”<br>hwclock -set -date “月/日/年 时：分：秒”</p>
+<p>########################################################<br>Ubuntu 14.04 sudo免密码的方法| sudo不需要密码<br>cd /etc/sudoers.d<br>sudo touch nopasswd4sudo<br>sudo vi nopasswd4sudo<br>输入 liutao ALL=NOPASSWD: ALL<br>yourusername ALL=(ALL) NOPASSWD : ALL<br>ESC :wq!  </p>
+<p>########################################################<br>ubuntu默认root密码<br>安装完Ubuntu后忽然意识到没有设置root密码，不知道密码自然就无法进入根用户下。到网上搜了一下，原来是这麽回事。Ubuntu的默认root密码是随机的，即每次开机都有一个新的root密码。我们可以在终端输入命令 sudo passwd，然后输入当前用户的密码，enter，终端会提示我们输入新的密码并确认，此时的密码就是root新密码。修改成功后，输入命令 su root，再输入新的密码就ok了。</p>
+<p>########################################################<br>修改sudoers文件后，sudo命令不能用了，怎么办(pkexec “/usr/sbin/visudo”)</p>
+<p>我也遇到这个问题，自己摸索着解决了</p>
+<p>首先sudo用不了了，无法提升gedit权限，起初我想用su - root ，但密码要先启用，还要用到sudo，PASS<br>于是想到新立得，他不是用sudo来提高权限的，于是找到/usr/bin/synaptic-pkexec是这样一条代码pkexec “/usr/sbin/synaptic” “$@”，于是在主目录新建一个文本，加入这样的代码pkexec “/usr/bin/gedit” “$@”，但虽然要密码，但打不开gedit PASS</p>
+<p>这时。我打开/usr/sbin 发现了visudo 于是改为pkexec “/usr/bin/gedit” “$@” 于是就打开了visudo（在终端直接输visudo权限不够的）。<br>把错误行删掉，再ctrl+O 就写入sudoers了，注意.tmp不要删掉.</p>
+<p>pkexec是什么命令我不知道，貌似只能为sbin目录的程序加权。</p>
+<p>############################################################<br>这个linux教程将为您说明ifconfig的网卡设备名称与网卡配置文件不同，导致service network restart启动服务失败,具体实现方法:</p>
+<p>ifconfig的网卡设备名称与网卡配置文件不同，导致service network restart启动服务失败</p>
+<p>ifconfig显示的网卡名为eth1,而配置文件名字为ifcfg-eth0,所以会导致失败。</p>
+<p>解决方案：</p>
+<p>1、删除/etc/udev/rules.d/70-persistent-net.rules文件，重启系统。</p>
+<p>2、ifconfig -a查看eth1网卡的MAC地址，然后将ifcfg-eth0改名为ifcfg-eth1，用vim编辑ifcfg-eth1文件，将HWADDR修改为eth1的MAC地址，然后重启网络服务即可。</p>
+<p>今天升级ubuntu到1604。升级后发现网卡人名称不是eth0了。修改的方法是：</p>
+<p>sudo nano /etc/default/grub<br>找到GRUB_CMDLINE_LINUX=””<br>改为GRUB_CMDLINE_LINUX=”net.ifnames=0 biosdevname=0”<br>然后sudo grub-mkconfig -o /boot/grub/grub.cfg<br>重启后，网卡名称果然变成了eth0和wlan0</p>
+<p>################################################################################################<br>ubuntu 关闭屏幕<br>xset dpms force off</p>
+<p>########################################################################<br>ubuntu录屏工具</p>
+<p>1、命令安装 SimpleScreenRecorder：<br>sudo add-apt-repository ppa:maarten-baert/simplescreenrecorder<br>sudo apt-get update<br>sudo apt-get install simplescreenrecorder<br>2、vlc<br>3.ffmpeg</p>
+<p>############################################<br>linux下合并文件夹<br>在window下，如果直接将一个文件夹拷贝到另外一个包含同名文件夹的位置，可以选择将两个文件夹合并。<br>那么，linux下的mv命令是否有同样的功能？合并同名文件夹呢？<br>答案是否定的。<br>如果目标文件夹空，该命令可以实现类似于文件搬运的效果。否则，系统会提示目标文件夹非空。<br>但是，有其他命令可以完成同样的功能。</p>
+<p>Solution</p>
+<p>使用linux下的文件同步命令：rsync。<br>用法如下</p>
+<p>rsync -av /source/ /destination/<br>(after checking)<br>rm -rf /source/<br>这样，可以实现同样的两个文件夹的文件合并，操作上，稍微繁琐一点。</p>
+<p>参考Merging folders with mv?(<a href="https://unix.stackexchange.com/questions/127712/merging-folders-with-mv/127713" target="_blank" rel="external">https://unix.stackexchange.com/questions/127712/merging-folders-with-mv/127713</a>)</p>
+<p>################################################################<br>/etc/network/interfaces 就是网卡的配置文件，这个文件会在系统启动的时候由系统读取其中的网络参数并应用在网络接口上，该文件可以用文本编辑工具比如 VIM 等修改，但是修改仅仅是对配置文件进行的，不会立即生效。要想生效，除了重启系统，还可以使用 service network restart 重启网络配置。</p>
+<p>##################################################################<br>查找字符串<br>linux查找目录下的所有文件中是否含有某个字符串<br>find . -type f -name “<em>.</em>pp” |xargs grep -n -A2 -B2 “helloworld” 2&gt;/dev/null –color=auto</p>
+<p>#################################################################<br>ubuntu 什么命令可以查看同一局域网的ip</p>
+<p>1、首先安装nmap工具<br>sudo apt-get install nmap<br>然后使用命令（按需修改）<br>nmap -v -sP 192.168.0.0/16<br>查看结果就可以了<br>2、</p>
+<p>#!/bin/bash<br>count=3</p>
+<blockquote>
+<p>ip.txt<br>i=1<br>j=255<br>ip_net=”10.42.0.”<br>echo “check ip from $ip_net$i to $ip_net$j”</p>
+</blockquote>
+<p>while [ $i -le $j ]<br>do<br>    ip=$ip_net$i</p>
+<h1 id="printf-“checking-ip…-“"><a href="#printf-“checking-ip…-“" class="headerlink" title="printf “checking $ip…  “"></a>printf “checking $ip…  “</h1><pre><code>integer=`ping -c $count $ip | grep &quot;packet loss&quot; | awk &apos;{print $4}&apos;`
+if [ $integer == 0 ]
+then
+printf &quot;checking $ip...  &quot;
+echo &quot;ping不通&quot; 
+else
+    echo -e &quot;\e[1;44;32mchecking $ip...  ping通......\e[0m&quot; 
+echo $ip  &quot;$integer/$c&quot;   &gt;&gt;ip.txt
+fi
+i=`expr $i + 1`
+</code></pre><p>done</p>
+<p>#old code</p>
+<p>#!/bin/bash<br>count=3</p>
+<blockquote>
+<p>ip.txt</p>
+</blockquote>
+<p>i=1<br>while [ $i -le 256 ]<br>do<br>    ip=”192.168.0.$i”<br>    printf “checking $ip…  “<br>    rate=<code>ping -c $count $ip | grep &quot;packet loss&quot; | awk &#39;{print $8}&#39;</code><br>    rate1=<code>echo $rate | awk &#39;{print substr($0,1,length($0)-1)}&#39;</code><br>    printf “丢包率%s\n” $rate<br>    if [ $rate1 == 100 ]<br>         then<br>         echo $ip &gt;&gt;ip.txt<br>    fi<br>    i=<code>expr $i + 1</code><br>done</p>
+<p>###############################################################<br>一、查看当前用户之id、whoami<br>命 令:id<br>功能说明：查看显示目前登陆账户的uid和gid及所属分组及用户名<br>二、查看用户列表、用户组之/etc/passwd、/etc/group、/etc/shadow<br>用户及用户组配置文件<br>用户信息文件：/etc/passwd<br>用户密码文件：/etc/shadow<br>用户组信息文件：/etc/group</p>
+<p>###############################################################<br>对 /opt/oracle/  目录下的所有文件与子目录执行相同的所有者变更，使所有者修改为oinstall用户组的oracle用户</p>
+<p>chown -R oracle:oinstall /opt/oracle/</p>
+<p>##############################################################<br>Linux cp命令如何拷贝整个目录下所有文件<br>1.<br>如何在Linux下拷贝一个目录呢？这好像是再简单不过的问题了。<br>比如要把/home/usera拷贝到/mnt/temp，首先想到的就是<br>cp -R /home/usera/<em> /mnt/temp<br>但是这样有一个问题，/home/usera下的隐藏文件都不会被拷贝，子目录下的隐藏文件倒是会的。<br>那如何才是正确的方法呢？有人说用-a选项，有人说用find加管道。<br>其实没这么复杂，Google了之后，学了一招。原来只有用“.”当前目录代替“</em>”就好了<br>2.cp -R /home/usera  /mnt/temp</p>
+<p>#############################################################################3<br>shell脚本增加暂停</p>
+<p>1、<br>在shell脚本中添加暂停，按任意键继续<br>分析一个复杂脚本的时候，有时候需要加点暂停，分段来看，比较清晰</p>
+<p>于是参考了一些实现，目前自己用的是这样子的</p>
+<p>复制代码</p>
+<p>#add for debug by zqb</p>
+<p>function get_char()<br>{<br>　　SAVEDSTTY=<code>stty -g</code><br>　　stty -echo<br>　　stty cbreak<br>　　dd if=/dev/tty bs=1 count=1 2&gt; /dev/null<br>　　stty -raw<br>　　stty echo<br>　　stty $SAVEDSTTY<br>}</p>
+<p>enable_pause=1<br>function pause()<br>{<br>　　if [ “x$1” != “x” ] ;then<br>　　　　echo $1<br>　　fi<br>　　if [ $enable_pause -eq 1 ];then<br>　　　　echo “Press any key to continue!”<br>　　char=<code>get_char</code><br>　　fi<br>}<br>复制代码<br>然后在需要暂停的地方，调用pause函数，参数是提示信息<br>比如<br>xxx<br>pause “xxx ok”<br>yyy<br>pause “yyy ok”<br>zzz<br>为了方便调试，加了个开关变量 enable_pause=1，改成0可以取消添加的暂停 </p>
+<p>本文链接 <a href="http://www.cnblogs.com/zqb-all/p/6296638.html" target="_blank" rel="external">http://www.cnblogs.com/zqb-all/p/6296638.html</a></p>
+<p>2、enter键继续<br>read -p “enter键继续…”<br>或者read -n1 var<br>3、任意键继续<br>要任意键继续，需要给你写一个函数，如下：</p>
+<p>get_char()<br>        {<br>        SAVEDSTTY=<code>stty -g</code><br>        stty -echo<br>        stty cbreak<br>        dd if=/dev/tty bs=1 count=1 2&gt; /dev/null<br>        stty -raw<br>        stty echo<br>        stty $SAVEDSTTY<br>        }<br>将这个函数代码写到脚本的开头，即 #!/bin/bash 下面就行</p>
+<p>然后在你需要暂停的地方加上<br>echo 任意键继续…<br>char=<code>get_char</code><br>就行了，这个就是任意键继续的模块，你试试吧~</p>
+<p>##################################################################<br>vim 32位显示<br>在“命令”模式下输入“:%!xxd  -r ”命令</p>
+<p>###################################################################<br>NetworkManager的图案变灰（<a href="https://askubuntu.com/questions/135787/gray-button-for-saving-editing-vpn-connection-in-ubuntu-12-04）" target="_blank" rel="external">https://askubuntu.com/questions/135787/gray-button-for-saving-editing-vpn-connection-in-ubuntu-12-04）</a><br>The problem originates from the security policy implemented in Ubuntu. You will be required to change this as described in the displayed thread.</p>
+<p>The file is /usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy, edit it with:</p>
+<p>sudo -H gedit /usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy<br>You need to change the action:</p>
+<action id="org.freedesktop.NetworkManager.settings.modify.own">
 
+<p><allow_inactive>no</allow_inactive><br>to read</p>
+<p><allow_inactive>auth_admin</allow_inactive><br>or</p>
+<p><allow_inactive>yes</allow_inactive><br>logout to activate.</p>
+<p><a href="http://blog.csdn.net/anhuidelinger/article/details/17584299/" target="_blank" rel="external">http://blog.csdn.net/anhuidelinger/article/details/17584299/</a></p>
+<p>##############################################################################3<br>查看摄像头信息<br>udevadm info -a /dev/video0</p>
+<p>###################################################<br>ros python path</p>
+<p>I have the same problem after anaconda is installed. In the end of file ~/.bashrc, you will find export PATH=”/home/houpf/anaconda2/bin:$PATH” . In fact the ROS should use python in /opt/ros/indigo/lib/python2.7/dist-packages. Uncomment it and source ~/.bashrc then it works.</p>
+<p>[rospack] Warning: error while crawling /home/liutao: boost::filesystem::status: Permission denied: “/home/liutao/.gvfs”</p>
+<p>#umount /home/liutao/.gvfs</p>
+<p>#rm -rf .gvfs/</p>
+<p>########################################################<br>linux mv移动隐藏文件和不隐藏文件到指定目录</p>
+<p>方法/步骤<br>使用命令：mv  <em>  .[^.]</em>  ..<br>解释如下：<br>mv命令的最后一个参数是要移动文件的目标位置；</p>
+<p>第一个*匹配除了隐藏文件的所有文件；</p>
+<p>隐藏文件使用.[^.]*匹配</p>
+<p>匹配隐藏文件用 .[^.]<em>  为什么不用   .</em><br>                    .* 会匹配目录 . 和 ..</p>
+<p>.[^.]* 的意思是：以.开头，加不是.的一个任意字符，再加其他任意字符<br>//////////////////////////////////////////////////////////////////<br>Linux使用cp命令，隐藏的文件没有复制过去。<br>比如： cp -a /home/test/ /root/tmp/<br>像.htaccess这样的文件就没有复制过去？用什么命令才可以把隐藏文件复制过去？</p>
+<p>两条命令,加在一起就哦了, linux所谓的隐藏文件就是以点开头的, 所以.<em>就代表所有隐藏文件:<br>cp -r /home/test /root/tmp/<br>cp -r /home/test/.</em> /root/tmp/<br>wawoshashi  | 发布于2017-03-13 举报| 评论 1 2<br>cp -a /home/test/ /root/tmp/<br>上面的命令是把/home/test/ 这个目录及以下的所有文件都拷贝到/root/tem/下，效果应该是：/root/tmp/test/<strong><strong> 使用-a参数，可以把隐藏文件也一并复制过去的，这个我试过了，<br>另外，如果是cp -a /home/test/<em> /root/tmp/ 是想把/home/test这个目录下的所有文件复制过去，而不包含目录本身，效果是：/root/tmp/</em></strong></strong> 这样的话的确是不能把隐藏文件复制过去，但可以将*换成. 这样写：cp -a /home/test/. /root/tmp 这样就可以把所有的文件都复制过去了</p>
+<p>##################################################################################################################</p>
+<p>查询构架类型<br>dpkg –print-architecture       在t450上给出了amd64<br>cat /var/lib/dpkg/arch        在t450上给出了amd64 i386 arm64<br>～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～<br>liutao@liutao-ThinkPad-T450:~$ cat /var/lib/dpkg/arch<br>amd64<br>i386<br>arm64<br>liutao@liutao-ThinkPad-T450:~$ dpkg –remove-architecture arm64<br>dpkg: error: cannot remove architecture ‘arm64’ currently in use by the database<br>liutao@liutao-ThinkPad-T450:~$ sudo dpkg –remove-architecture arm64<br>dpkg: error: cannot remove architecture ‘arm64’ currently in use by the database<br>liutao@liutao-ThinkPad-T450:~$ dpkg –get-selections | grep i386 | awk ‘{print $1}’<br>libc6-i386<br>liutao@liutao-ThinkPad-T450:~$ dpkg –get-selections | grep arm64 | awk ‘{print $1}’<br>libatomic1-arm64-cross<br>libc6-arm64-cross<br>libc6-dev-arm64-cross<br>libgcc-4.8-dev-arm64-cross<br>libgcc1-arm64-cross<br>libgomp1-arm64-cross<br>libitm1-arm64-cross<br>libstdc++-4.8-dev-arm64-cross<br>libstdc++6-arm64-cross<br>linux-libc-dev-arm64-cross<br>liutao@liutao-ThinkPad-T450:~$ dpkg –print-architecture<br>amd64<br>liutao@liutao-ThinkPad-T450:~$<br>～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～<br>Multiarch support is enabled by the file /etc/dpkg/dpkg.cfg.d/multiarch<br>If you rename this file and run an update in a terminal you will notice that the i386 repo’s are no longer visible.<br>Thus<br>sudo mv /etc/dpkg/dpkg.cfg.d/multiarch /etc/dpkg/dpkg.cfg.d/multiarch.backup<br>Based on both Ben’s answer and user41220’s answer I did the following:</p>
+<p>sudo apt-get remove –purge <code>dpkg --get-selections | grep i386 | awk &#39;{print $1}&#39;</code><br>Then<br>sudo dpkg –remove-architecture i386<br>and that worked just fine for me.</p>
+<p>#############################################################################<br>比较GPU一般有两个指标，第一是单位功耗下的性能，行话是“每瓦性能（perf per watt）”（注意，这个和只考虑性能的跑分不是一回事），第二是对图形API OpenGL和DirectX的支持。</p>
+<p>####################################################################################<br>PING命令只能PING ip地址，不可以PING某一个端口号<br>端口的连接测试，不用 ping ，用 telnet。<br>ICMP是:Internet 控制信息协议（ICMP）是 IP 组的一个整合部分。通过 IP 包传送的 ICMP 信息主要用于涉及网络操作或错误操作的不可达信息。 ICMP 包发送是不可靠的，所以主机不能依靠接收 ICMP 包解决任何网络问题。ICMP不象TCP或UDP有端口，但它确实含有两个域：类型(type)和代码(code)。而且这些域的作用和端口也完全不同。Ping用到的是ICMP协议。不是端口。</p>
+<p>ping 大包的方法<br>1、指定数据包大小为1500Byte：Ping -s 1500 ip<br>2、指定次数为4次，数据包大小为32767Byte：Ping -c 4 -s 32767 ip</p>
+<p>#####################################################################################<br>ubuntu 16.04 忘记root密码<br>别人刚装的Ubuntu16.04 sever，root忘记了，哎。<br>1.进入recovery mode<br>　　开机选择高级模式-&gt; recovery mode-&gt;root<br>2.修改密码：<br>　　#&gt; passwd root<br>　　显示错误：<br> 　root@username-PC:~# passwd username<br>　　Enter new UNIX password:<br>　　Retype new UNIX password:<br>　　passwd: Authentication token manipulation error<br>　　passwd: password unchanged<br>　网上说是因为recovery mode下的根分区是以只读的方式挂载的，所以需要重新挂载：<br>　#&gt; mount -rw -o remount /<br>　OK 问题解决<br>　　<br> 原文链接：<a href="http://askubuntu.com/questions/91188/authentication-token-manipulation-error" target="_blank" rel="external">http://askubuntu.com/questions/91188/authentication-token-manipulation-error</a></p>
+<p>#######################################################################################<br>3、测试网页返回值</p>
+<h1 id="curl-o-dev-null-s-w-http-code-www-linux-com"><a href="#curl-o-dev-null-s-w-http-code-www-linux-com" class="headerlink" title="curl -o /dev/null -s -w %{http_code} www.linux.com"></a>curl -o /dev/null -s -w %{http_code} www.linux.com</h1><p>Ps:在脚本中，这是很常见的测试网站是否正常的用法<br>shell curl 取得HTTP返回的状态码<br>curl -I -m 10 -o /dev/null -s -w %{http_code} www.baidu.com</p>
+<p>########################################################################################<br>串口测试<br>Linux 下串口编程之一 串口操作基本指令</p>
+<p>stty查看串口参数<br>stty -F /dev/ ttyTHS2 -a<br>查看串口ttyTHS2当前的参数，包括波特率、数据位等。<br>注意ttyTHS2在不同的设备下这个串口名称未必相同。</p>
+<p>stty设置串口参数<br>stty -F /dev/ttyS0 ispeed 115200 ospeed 115200 cs8<br>该命令将串口设置成115200波特率，8位数据模式。一般情况下设置这两个参数就可以了，如果显示数据乱码，可能还需要设置其它参数，使用man查看stty其它设置选项。</p>
+<p>cat打印串口数据<br>cat /dev/ttyTHS2<br>串口数据就可以在终端上显示了。</p>
+<p>echo发送串口数据<br>echo &gt;123 /dev/ttyTHS2<br>通过串口ttyTHS2发送数据。 </p>
+<p>###########################################################<br>TX2开发板窗口连接<br>J21的6（GND）-8（TX）-10（RX）对应UART0  6点接黑线（GND） 8点接上USB转串口的白线（RDX） 10点接蓝线（TDX）</p>
+<p>############################################################<br>Ubuntu清空本地DNS命令</p>
+<p>来源：<a href="http://blog.jkey.lu/the-command-of-clean-local-dns-on-ubuntu/" target="_blank" rel="external">http://blog.jkey.lu/the-command-of-clean-local-dns-on-ubuntu/</a></p>
+<p>最近在用迅雷的离线下载时，总是出现 502 错误，总感觉是 dns 被劫持了。应为是偶尔出现，也就懒得弄了。</p>
+<p>但是就在刚才，下载时发现，下载是没有出现 502 错误，反而是重定向到了一个百度推广页。火大了，这就可以断定是我的 dns 被劫持了。<br>然后想清除本地的 dns，但是我只知道 windows 中可以用 ipconfig /flushdns 就可以了，本以为在 Linux 中用 ifconfig 命令加相关参数也可以清除本地 dns 缓存。但是看了一下 ifconfig 的帮助却没有发现有类似功能。<br>于是，就 Google 了一下，乍一看都是一个方法，那就是安装 nscd 这个软件。<br>// 安装 nscd<br>sudo aptitude install nscd<br>// 清除本地 dns 缓存<br>sudo /etc/init.d/nscd restart<br>我没有用这个方法，是因为不想为一个简单的操作去安装另一个软件，感觉这样没有什么必要。而且在用这个方法时，发现 aptitude 这命令也需要安装就放弃了。然后继续 Google，还是被我发现了下面这个命令。<br>sudo /etc/init.d/dns-clean start<br>终于把那些垃圾 DNS 缓存从我的电脑里赶了出去。</p>
+<p>##############################################<br>网络测试traceroute</p>
+<p>##############################################<br>dpkg: error: dpkg status database is locked by another process</p>
+<p>Try using sudo lsof /var/lib/dpkg/lock to see which process has locked the updater.<br>You can also use ps -ax | grep dpkg or ps -ax | grep apt however there is also the software centre and auto-updater which could be blocking the process at which point you can kill the offending processes using kill <process id="" number="">.<br>Have a look here for some more things you can try if these don’t work Unable to lock the administration directory (/var/lib/dpkg/) is another process using it?<br><a href="https://askubuntu.com/questions/15433/unable-to-lock-the-administration-directory-var-lib-dpkg-is-another-process" target="_blank" rel="external">https://askubuntu.com/questions/15433/unable-to-lock-the-administration-directory-var-lib-dpkg-is-another-process</a></process></p>
+<p>First run:</p>
+<p>lsof /var/lib/dpkg/lock<br>Then make sure that process isn’t running:</p>
+<p>ps cax | grep PID<br>If it is running:</p>
+<p>kill PID</p>
+<p>#wait<br>kill -9 PID<br>Make sure process is done:</p>
+<p>ps cax | grep PID<br>Then remove the lock file:</p>
+<p>sudo rm /var/lib/dpkg/lock<br>Let dpkg fix itself:</p>
+<p>sudo dpkg –configure -a<br>You should be fine afterwards :)</p>
+<p>#########################################################################333<br>ubuntu 开关机记录<br>cd /var/log<br>last -f wtmp.l</p>
+<p>last命令</p>
+<blockquote>
+<p>last<br>查看最近一次开机时间<br>who -b<br>或者<br>last -1 reboot<br>查看关机记录<br>last -x | grep shutdown #以关机时间段显示<br>查看失败登录记录, 来源以IP显示<br>sudo lastb -i</p>
+</blockquote>
+<p>查看系统从上次开机到现在已经运行多久了</p>
+<blockquote>
+<p>uptime<br>或者<br>w</p>
+</blockquote>
+<p>参考文章<br>查看 Linux 開機記錄<br>How to Check Linux System Reboot Date and Time<br>Linux Find Out Last System Reboot Time and Date Command</p>
+<p>本文来自 crane-yuan 的CSDN 博客 ，全文地址请点击：<a href="https://blog.csdn.net/u014717036/article/details/71036562?utm_source=copy" target="_blank" rel="external">https://blog.csdn.net/u014717036/article/details/71036562?utm_source=copy</a> </p>
+<p>uptime命令<br>你同样可以使用uptime命令来推断系统最后的启动时间。uptime命令会显示当前的时间，同样也会显示系统已经运行的时间。从这些信息中，你就可以计算系统最后启动的时间了</p>
+<p>##############################################################################<br>dmesg时间转换<br>dmesg 输出的格式不易查看，可以通过命令进行转换。<br>记录如下：<br>时间查看：<br>date -d “1970-01-01 UTC <code>echo &quot;$(date +%s)-$(cat /proc/uptime|cut -f 1 -d&#39; &#39;)+12288812.926194&quot;|bc</code> seconds”</p>
+<p>#############################################################################<br>在新版的ubuntu中，使用timedatectl 替换了ntpdate来进行时间管理。<br>timedatectl命令可以查询和更改系统时钟和设置，你可以使用此命令来设置或更改当前的日期，时间和时区，或实现与远程NTP服务器的自动系统时钟同步。<br>timedatectl status<br>timedatectl set-timezone “Asia/Shanghai”<br>timedatectl set-time 15:58:30<br>timedatectl set-time 20151120<br>timedatectl set-time ‘16:10:40 2015-11-20’<br>要设置硬件时钟以协调世界时，UTC，可以使用 set-local-rtc boolean-value选项，如下所示：<br>　　首先确定你的硬件时钟是否设置为本地时区：</p>
+<h1 id="timedatectl-grep-local"><a href="#timedatectl-grep-local" class="headerlink" title="timedatectl | grep local"></a>timedatectl | grep local</h1><p>　　将你的硬件时钟设置为本地时区：</p>
+<h1 id="timedatectl-set-local-rtc-1"><a href="#timedatectl-set-local-rtc-1" class="headerlink" title="timedatectl set-local-rtc 1"></a>timedatectl set-local-rtc 1</h1><p>将你的硬件时钟设置为协调世界时（UTC）：</p>
+<h1 id="timedatectl-set-local-rtc-0"><a href="#timedatectl-set-local-rtc-0" class="headerlink" title="timedatectl set-local-rtc 0"></a>timedatectl set-local-rtc 0</h1><p>将Linux系统时钟同步到远程NTP服务器<br>　　NTP即Network Time Protocol（网络时间协议），是一个互联网协议，用于同步计算机之间的系统时钟。timedatectl实用程序可以自动同步你的Linux系统时钟到使用NTP的远程服务器。<br>　　注意，你必须在系统上安装NTP以实现与NTP服务器的自动时间同步。<br>　　要开始自动时间同步到远程NTP服务器，在终端键入以下命令。</p>
+<h1 id="timedatectl-set-ntp-true"><a href="#timedatectl-set-ntp-true" class="headerlink" title="timedatectl set-ntp true"></a>timedatectl set-ntp true</h1><p>　　要禁用NTP时间同步，在终端键入以下命令。</p>
+<h1 id="timedatectl-set-ntp-false"><a href="#timedatectl-set-ntp-false" class="headerlink" title="timedatectl set-ntp false"></a>timedatectl set-ntp false</h1><p>##################################################################################<br>ubuntu/var/log/下各个日志文件<br>2013年08月10日 11:22:57 nancygreen 阅读数：48870更多<br>个人分类： linux系统管理<br>本文简单介绍ubuntu/var/log/下各个日志文件，方便出现错误的时候查询相应的log<br>/var/log/alternatives.log-更新替代信息都记录在这个文件中<br>/var/log/apport.log -应用程序崩溃记录<br>/var/log/apt/   -用apt-get安装卸载软件的信息<br>/var/log/auth.log  -登录认证log<br>/var/log/boot.log  -包含系统启动时的日志。<br>/var/log/btmp    -记录所有失败启动信息<br>/var/log/Consolekit  - 记录控制台信息<br>/var/log/cpus     - 涉及所有打印信息的日志<br>/var/log/dist-upgrade  - dist-upgrade这种更新方式的信息<br>/var/log/dmesg    -包含内核缓冲信息（kernel ringbuffer）。在系统启动时，显示屏幕上的与硬件有关的信息<br>/var/log/dpkg.log   - 包括安装或dpkg命令清除软件包的日志。<br>/var/log/faillog    - 包含用户登录失败信息。此外，错误登录命令也会记录在本文件中。<br>/var/log/fontconfig.log -与字体配置有关的log。<br>/var/log/fsck     - 文件系统日志<br>/var/log/faillog   -包含用户登录失败信息。此外，错误登录命令也会记录在本文件中。<br>/var/log/hp/<br>/var/log/install/<br>/var/log/jokey.log<br>/var/log/kern.log –包含内核产生的日志，有助于在定制内核时解决问题。<br>/var/log/lastlog —记录所有用户的最近信息。这不是一个ASCII文件，因此需要用lastlog命令查看内容。<br>/var/log/faillog –包含用户登录失败信息。此外，错误登录命令也会记录在本文件中。<br>/var/log/lightdm/<br>/var/log/mail/ – 这个子目录包含邮件服务器的额外日志。<br>/var/log/mail.err    -类似于上面的<br>/var/log/news/<br>/var/log/pm-powersave.log<br>/var/log/samba/ –包含由samba存储的信息。<br>/var/log/syss.log<br>/var/log/speech-dispacher/<br>/var/log/udev<br>/var/log/ufw.log<br>/var/log/upstart/<br>/var/log/uattended-upgrades/<br>/var/log/wtmp —包含登录信息。使用wtmp可以找出谁正在登陆进入系统，谁使用命令显示这个文件或信息等。<br>/var/log/xorg.*.log— 来自X的日志信息。</p>
+<p>###########################################################<br>tx2 开机蓝屏<br>这个时候大家在键盘上按键：Ctrl+Alt+F4<br>进入到字符界面，说白了就是命令行界面啦。我在网上看到如下这段：”sudo apt-get install xserver-xorg-lts-utopic<br>sudo dpkg-reconfigure xserver-xorg-lts-utopic reboot”,他们说能解决，但是我这并不是的，在运行第一条指令后，有可能根本找不到 xserver-xorg-lts-utopic ，但是会有提示“sudo dpkg –configure -a”（这句一般是在运行结果的最后一行可以看到），然后你运行这句sudo dpkg –configure -a。等执行完，在命令行输入reboot。之后会关机重启，就可以进入界面啦！</p>
+<p>#################################################<br>使用v4l2命令来调整参数<br>v4l2-ctl –all列出所有设备及参数<br>v4l2-ctl –set-ctrl=exposure_auto=1将曝光时间调为手动设置<br>v4l2-ctl –set-ctrl=exposure_absolute=100曝光时间 </p>
+<p>v4l2-ctl –list-devices<br>v4l2-ctl –list-formats         list the formats available:</p>
+<p>v4l2-ctl –get-priority       Get the driver detail:<br>v4l2-ctl -D            Get the driver detail:<br>v4l2-ctl -L    list the controls available:<br>v4l2-ctl –all</p>
+<p>######################################################<br>tput capname [parameters]: 这是tput最常用的方式,具体用法见下一章.<br>tput init: 初始化终端,在使用tput前一般会先执行该命令<br>tput reset: 重置终端属性为默认值<br>tput clear: 清屏<br>tput -S: 从stdin中读取指令,可以支持一次性设置多个指令,但必须保证一个指令一行.<br>tput的使用</p>
+<p>tput一般用于作三件事情: 设置终端属性,获取终端属性以及判断终端是否支持某项能力.</p>
+<p>但请记住,tput并不支持设置颜色!</p>
+<p>另外,在使用tput的输出值时,请一定先保证tput的返回值为0!</p>
+<p>设置终端属性</p>
+<p>tput主要是通过输出控制码字符串来实现一些特殊终端效果的.</p>
+<p>bel: 警铃<br>blink: 进入闪烁模式<br>bold: 进入粗体模式<br>civis: 隐藏鼠标<br>cnorm: 取消隐藏鼠标<br>clear: 清屏<br>cup rrc: 将光标移动到第r行,第r行,第c列<br>el: 清除到行尾<br>ell: 清除到行首<br>smso: 进入凸出模式<br>rmso: 退出凸出模式<br>smul: 进入下划线模式<br>rmul: 退出下划线模式<br>sc: 保存光标当前位置<br>rc: 回复光标最后保存的位置<br>rev: 进入反转模式<br>sgr0: 回复正常显示<br>tput setaf ColorNumber## 设置前景色<br>tput setab ColorNumber ##设置背景色<br>setf n/setbn/setbn: 设置前景色/背景色.$n为在terminfo数据库中的颜色数值,一般对应关系为:<br>数值    颜色<br>0    黑色<br>1    蓝色<br>2    绿色<br>3    青色<br>4    红色<br>5    洋红色<br>6    黄色</p>
+<h2 id="7-白色"><a href="#7-白色" class="headerlink" title="7    白色"></a>7    白色</h2><p>原文：<a href="https://blog.csdn.net/lujun9972/article/details/53427018" target="_blank" rel="external">https://blog.csdn.net/lujun9972/article/details/53427018</a> </p>
+<p>#########################################################################################<br>检查某个命令是否存在<br>许多系统的which实现，都偷偷摸摸干了一些“不足为外人道也”的事情</p>
+<p>所以，不要用which，可以使用下面的方法：</p>
+<p>$ command -v foo &gt;/dev/null 2&gt;&amp;1 || { echo &gt;&amp;2 “I require foo but it’s not installed.  Aborting.”; exit 1; }<br>$ type foo &gt;/dev/null 2&gt;&amp;1 || { echo &gt;&amp;2 “I require foo but it’s not installed.  Aborting.”; exit 1; }<br>$ hash foo 2&gt;/dev/null || { echo &gt;&amp;2 “I require foo but it’s not installed.  Aborting.”; exit 1; }<br>if hash gdate 2&gt;/dev/null; then<br>    gdate “$@”<br>else<br>    date “$@”<br>fi</p>
+</action>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://liutao2017.github.io/2018/11/27/ubuntu-使用问题记录/" data-id="cjozsggpi0002l5eo0vns2o32" class="article-share-link">Share</a>
+      <a data-url="http://liutao2017.github.io/2018/11/27/ubuntu-使用问题记录/" data-id="cjozshlkz0002n4eorq22j6o1" class="article-share-link">Share</a>
       
       
     </footer>
