@@ -65,6 +65,83 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-ubuntu-使用问题记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/27/ubuntu-使用问题记录/" class="article-date">
+  <time datetime="2018-11-27T13:38:38.000Z" itemprop="datePublished">2018-11-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/27/ubuntu-使用问题记录/">ubuntu 使用问题记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如何讓file system 變成可以write, 而不是read only，這篇的解法就還蠻簡單的，就是只要下指令就可以了。</p>
+<p>mount -o remount,rw /</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://liutao2017.github.io/2018/11/27/ubuntu-使用问题记录/" data-id="cjozsggpi0002l5eo0vns2o32" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-用hexo搭建github-blog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/27/用hexo搭建github-blog/" class="article-date">
+  <time datetime="2018-11-27T13:36:09.000Z" itemprop="datePublished">2018-11-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/27/用hexo搭建github-blog/">用hexo搭建github blog </a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>问题： hexo搭建博客过程中出现的问题，4000端口被占用</p>
+<p>解决方案1:<br>先netstat -ant |grep 4000 看看被什么占用了,然后如果这个是没人用的东西,就kill掉这个进程</p>
+<p>解决方案2:<br>可以在_config.yml内加上如下代码更改hexo-server运行时的端口号：<br>server:<br>  port: 4001<br>  compress: true<br>  header: true<br>其中4001可以换成想要运行的端口号。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://liutao2017.github.io/2018/11/27/用hexo搭建github-blog/" data-id="cjozsggpy0004l5eovv3innld" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-安装ubuntu之后的优化和设置" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/27/安装ubuntu之后的优化和设置/" class="article-date">
@@ -91,7 +168,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://liutao2017.github.io/2018/11/27/安装ubuntu之后的优化和设置/" data-id="cjozm1ngb00023jeoxlpjxfq3" class="article-share-link">Share</a>
+      <a data-url="http://liutao2017.github.io/2018/11/27/安装ubuntu之后的优化和设置/" data-id="cjozsggpj0003l5eo4ug5ekyu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -132,7 +209,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://liutao2017.github.io/2017/06/20/first/" data-id="cjozm1ng300003jeovxm28nnc" class="article-share-link">Share</a>
+      <a data-url="http://liutao2017.github.io/2017/06/20/first/" data-id="cjozsggpa0000l5eoc4vh3kv9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -173,7 +250,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://liutao2017.github.io/2017/06/20/hello-world/" data-id="cjozm1ng900013jeot5ab1h59" class="article-share-link">Share</a>
+      <a data-url="http://liutao2017.github.io/2017/06/20/hello-world/" data-id="cjozsggpf0001l5eoy10o9xje" class="article-share-link">Share</a>
       
       
     </footer>
@@ -211,6 +288,14 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/11/27/ubuntu-使用问题记录/">ubuntu 使用问题记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/27/用hexo搭建github-blog/">用hexo搭建github blog </a>
+          </li>
         
           <li>
             <a href="/2018/11/27/安装ubuntu之后的优化和设置/">安装ubuntu之后的优化和设置</a>
